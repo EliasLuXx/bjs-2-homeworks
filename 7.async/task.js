@@ -1,7 +1,7 @@
 class AlarmClock {
     constructor() {
-        this.alarmCollection = []; // Коллекция звонков
-        this.intervalId = null; // ID таймера
+        this.alarmCollection = []; 
+        this.intervalId = null; 
     }
 
     addClock(time, callback) {
@@ -11,7 +11,6 @@ class AlarmClock {
 
         if (this.alarmCollection.some(alarm => alarm.time === time)) {
             console.warn('Уже присутствует звонок на это же время'); 
-            return;
         }
 
         this.alarmCollection.push({
@@ -22,40 +21,40 @@ class AlarmClock {
     }
 
     removeClock(time) {
-        this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time); // Удаление звонка по времени
+        this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time); 
     }
 
     getCurrentFormattedTime() {
         const date = new Date();
-        return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`; // Текущее время в формате HH:MM
+        return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`; 
     }
 
     start() {
         if (this.intervalId) {
-            return; // Если интервал уже запущен, выходим
+            return; 
         }
 
         this.intervalId = setInterval(() => {
             this.alarmCollection.forEach(alarm => {
                 if (alarm.time === this.getCurrentFormattedTime() && alarm.canCall) {
-                    alarm.callback(); // Вызываем коллбек
-                    alarm.canCall = false; // Устанавливаем canCall в false
+                    alarm.callback(); 
+                    alarm.canCall = false; 
                 }
             });
-        }, 1000); // Запускаем интервал каждую секунду
+        }, 1000); 
     }
 
     stop() {
-        clearInterval(this.intervalId); // Останавливаем интервал
-        this.intervalId = null; // Сбрасываем значение интервала
+        clearInterval(this.intervalId); 
+        this.intervalId = null; 
     }
 
     resetAllCalls() {
-        this.alarmCollection.forEach(alarm => alarm.canCall = true); // Сбрасываем возможность вызова для всех звонков
+        this.alarmCollection.forEach(alarm => alarm.canCall = true); 
     }
 
     clearAlarms() {
-        this.stop(); // Останавливаем будильник
-        this.alarmCollection = []; // Очищаем все звонки
+        this.stop(); 
+        this.alarmCollection = []; 
     }
 }
